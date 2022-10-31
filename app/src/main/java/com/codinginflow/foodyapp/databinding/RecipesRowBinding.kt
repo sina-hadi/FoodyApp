@@ -29,11 +29,10 @@ class RecipesRowBinding {
                         RecipesFragmentDirections.actionRecipesFragmentToDetailsActivity(result)
                     recipeRowLayout.findNavController().navigate(action)
                 } catch (e: Exception) {
-                    Log.e("onRecipeClickListener" , e.toString())
+                    Log.e("onRecipeClickListener", e.toString())
                 }
             }
         }
-
 
         @BindingAdapter("android:loadImageFromUrl")
         @JvmStatic
@@ -99,7 +98,6 @@ class RecipesRowBinding {
                 textView.text = desc
             }
         }
-
 
     }
 }

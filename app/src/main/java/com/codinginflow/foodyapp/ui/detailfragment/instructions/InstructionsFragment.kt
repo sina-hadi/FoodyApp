@@ -34,10 +34,6 @@ class InstructionsFragment : Fragment() {
             binding.instructionWebView.loadUrl(websiteUrl)
         }
 
-        Log.e("ABCD" , websiteUrl.toString())
-
-
-
         return binding.root
     }
 }

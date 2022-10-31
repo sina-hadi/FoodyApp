@@ -20,9 +20,7 @@ object DatabaseModule {
     fun provideDatabase(
         @ApplicationContext context: Context
     ) = Room.databaseBuilder(
-        context,
-        RecipesDatabase::class.java,
-        DATABASE_NAME
+        context, RecipesDatabase::class.java, DATABASE_NAME
     ).build()
 
 

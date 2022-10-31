@@ -11,7 +11,7 @@ class RecipesTypeConverter {
     private val gson = Gson()
 
     @TypeConverter
-    fun foodRecipeToString(foodRecipe: FoodRecipe) : String {
+    fun foodRecipeToString(foodRecipe: FoodRecipe): String {
         return gson.toJson(foodRecipe)
     }
 

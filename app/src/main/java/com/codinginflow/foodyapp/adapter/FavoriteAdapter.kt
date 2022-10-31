@@ -19,10 +19,8 @@ import com.codinginflow.foodyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class FavoriteAdapter(
-    private val requireActivity: FragmentActivity,
-    private val mainViewModel: MainViewModel
-) :
-    RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>(), ActionMode.Callback {
+    private val requireActivity: FragmentActivity, private val mainViewModel: MainViewModel
+) : RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>(), ActionMode.Callback {
 
     var recipes: List<FavoritesEntity> = emptyList()
 
@@ -57,8 +55,6 @@ class FavoriteAdapter(
         myViewHolders.add(holder)
         rootView = holder.itemView.rootView
 
-        Log.e("BIND" , recipes.toString())
-
         val recipeRow = holder.itemView.findViewById<ConstraintLayout>(R.id.recipesRowLayout)
         val resultRecipe: FavoritesEntity = recipes[position]
         holder.bind(resultRecipe.result)
@@ -85,7 +81,6 @@ class FavoriteAdapter(
                 true
             }
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -170,19 +165,18 @@ class FavoriteAdapter(
         val recipesDiffUtil = RecipesDiffUtil(recipes, newData)
         val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes = newData
-        diffUtilResult.dispatchUpdatesTo(this) // Should Learn Async of it (Background Thread)
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 
     private fun showSnackBar(message: String) {
         Snackbar.make(
             rootView, message, Snackbar.LENGTH_SHORT
-        ).setAction("Okay"){} .show()
+        ).setAction("Okay") {}.show()
     }
 
     fun clearContextualActionMode() {
-        if(this::mActionMode.isInitialized) {
+        if (this::mActionMode.isInitialized) {
             mActionMode.finish()
         }
     }
-
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
     private val recipesDao: RecipesDao
-){
+) {
 
     fun readRecipes(): Flow<List<RecipesEntity>> {
         return recipesDao.readRecipes()
@@ -38,10 +38,5 @@ class LocalDataSource @Inject constructor(
     suspend fun deleteFavoriteRecipe(id: Int) {
         recipesDao.deleteFavoriteRecipe(id)
     }
-
-    suspend fun deleteAllFavoriteRecipes() {
-        recipesDao.deleteAllFavoriteRecipes()
-    }
-
 
 }

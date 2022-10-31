@@ -6,7 +6,7 @@ import com.codinginflow.foodyapp.model.FoodRecipe
 import com.codinginflow.foodyapp.util.Constants.Companion.RECIPES_TABLE
 
 @Entity(tableName = RECIPES_TABLE)
-class RecipesEntity (
+class RecipesEntity(
     var foodRecipe: FoodRecipe
 ) {
     @PrimaryKey(autoGenerate = false)

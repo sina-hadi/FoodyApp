@@ -29,7 +29,6 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.MyViewHolder>
                 return MyViewHolder(binding)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -50,7 +49,6 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.MyViewHolder>
         val recipesDiffUtil = RecipesDiffUtil(ingredientsList, newData.extendedIngredients)
         val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         ingredientsList = newData.extendedIngredients
-        diffUtilResult.dispatchUpdatesTo(this) // Should Learn Async of it (Background Thread)
+        diffUtilResult.dispatchUpdatesTo(this)
     }
-
 }

@@ -15,44 +15,48 @@ class RecipesBinding {
 
     companion object {
 
-        @BindingAdapter("eReadApiResponse", "eReadDatabase", requireAll = true)
+        @BindingAdapter("eReadApiResponse")
         @JvmStatic
         fun errorImageViewVisibility(
-            linearLayout: LinearLayout,
-            apiResponse: NetworkResult<FoodRecipe>?,
-            database: List<RecipesEntity>?
+            linearLayout: LinearLayout, apiResponse: NetworkResult<FoodRecipe>?
         ) {
-            if (apiResponse is NetworkResult.Error && database.isNullOrEmpty()) {
-                linearLayout.visibility = View.VISIBLE
-            } else if (apiResponse is NetworkResult.Loading) {
-                linearLayout.visibility = View.INVISIBLE
-            } else if (apiResponse is NetworkResult.Success) {
-                linearLayout.visibility = View.INVISIBLE
+            when (apiResponse) {
+                is NetworkResult.Error -> {
+                    linearLayout.visibility = View.VISIBLE
+                }
+                is NetworkResult.Loading -> {
+                    linearLayout.visibility = View.INVISIBLE
+                }
+                is NetworkResult.Success -> {
+                    linearLayout.visibility = View.INVISIBLE
+                }
+                else -> {}
             }
         }
 
-        @BindingAdapter("lReadApiResponse", "lReadDatabase", requireAll = true)
+        @BindingAdapter("lReadApiResponse")
         @JvmStatic
         fun loadingImageViewVisibility(
-            linearLayout: LinearLayout,
-            apiResponse: NetworkResult<FoodRecipe>?,
-            database: List<RecipesEntity>?
+            linearLayout: LinearLayout, apiResponse: NetworkResult<FoodRecipe>?
         ) {
-            if (apiResponse is NetworkResult.Error && database.isNullOrEmpty()) {
-                linearLayout.visibility = View.INVISIBLE
-            } else if (apiResponse is NetworkResult.Loading) {
-                linearLayout.visibility = View.VISIBLE
-            } else if (apiResponse is NetworkResult.Success) {
-                linearLayout.visibility = View.INVISIBLE
+            when (apiResponse) {
+                is NetworkResult.Error -> {
+                    linearLayout.visibility = View.INVISIBLE
+                }
+                is NetworkResult.Loading -> {
+                    linearLayout.visibility = View.VISIBLE
+                }
+                is NetworkResult.Success -> {
+                    linearLayout.visibility = View.INVISIBLE
+                }
+                else -> {}
             }
         }
 
         @BindingAdapter("readApiResponseJoke", "readDatabaseJoke", requireAll = false)
         @JvmStatic
         fun setCardAndProgressVisibility(
-            view: View,
-            apiResponse: NetworkResult<FoodJoke>?,
-            database: List<FoodJokeEntity>?
+            view: View, apiResponse: NetworkResult<FoodJoke>?, database: List<FoodJokeEntity>?
         ) {
             when (apiResponse) {
                 is NetworkResult.Loading -> {

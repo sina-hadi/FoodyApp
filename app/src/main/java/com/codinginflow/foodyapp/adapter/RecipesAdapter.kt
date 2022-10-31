@@ -16,7 +16,6 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
 
     var recipes: List<ResultRecipe> = emptyList()
 
-
     class MyViewHolder(private val binding: RecipesRowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -40,9 +39,6 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val resultRecipe = recipes[position]
-        if (position == 2) {
-            Log.e("ABCD", resultRecipe.toString())
-        }
         holder.bind(resultRecipe)
     }
 
@@ -55,6 +51,6 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
         val recipesDiffUtil = RecipesDiffUtil(recipes, newData.results)
         val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes = newData.results
-        diffUtilResult.dispatchUpdatesTo(this) // Should Learn Async of it (Background Thread)
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 }

@@ -18,7 +18,6 @@ class IngredientsFragment : Fragment() {
 
     private var _binding: FragmentIngredientsBinding? = null
     private val binding get() = _binding!!
-
     private val mAdapter by lazy { IngredientsAdapter() }
 
     override fun onCreateView(
@@ -30,11 +29,9 @@ class IngredientsFragment : Fragment() {
         val args = arguments
         val myBundle: ResultRecipe? = args?.getParcelable(RECIPE_RESULT_KEY)
 
-
         binding.ingredientsRecyclerView.adapter = mAdapter
         binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         myBundle?.let { mAdapter.setData(it) }
-
 
         return binding.root
     }

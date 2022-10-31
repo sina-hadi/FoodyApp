@@ -28,8 +28,6 @@ class OverviewFragment : Fragment() {
         val myBundle: ResultRecipe? = args?.getParcelable(RECIPE_RESULT_KEY)
         binding.bundle = myBundle
 
-
-
         return binding.root
     }
 }
