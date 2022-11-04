@@ -84,11 +84,8 @@ class MainViewModel @Inject constructor(
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         recipesResponse.value = NetworkResult.Loading()
         try {
-            Log.e("ABCD MAin", "1")
             val response = repository.remote.getRecipes(queries)
-            Log.e("ABCD MAin", "2")
             recipesResponse.value = HandleResponse(response).handleResponse
-            Log.e("ABCD MAin", "3")
 
             val foodRecipe = recipesResponse.value!!.data
             if (foodRecipe != null) {
@@ -96,7 +93,6 @@ class MainViewModel @Inject constructor(
             }
 
         } catch (e: Exception) {
-            Log.e("ABCD MAin", "4")
             recipesResponse.value = NetworkResult.Error("Recipes not found.")
         }
     }
