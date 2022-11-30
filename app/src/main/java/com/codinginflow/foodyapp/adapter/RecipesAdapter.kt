@@ -1,12 +1,13 @@
 package com.codinginflow.foodyapp.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.codinginflow.foodyapp.data.database.entities.FavoritesEntity
+import com.codinginflow.foodyapp.R
 import com.codinginflow.foodyapp.databinding.RecipesRowLayoutBinding
 import com.codinginflow.foodyapp.model.FoodRecipe
 import com.codinginflow.foodyapp.model.ResultRecipe
@@ -40,6 +41,20 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val resultRecipe = recipes[position]
         holder.bind(resultRecipe)
+
+        val likedImage = holder.itemView.findViewById<ImageView>(R.id.rrHeartImage)
+        val likedTitle = holder.itemView.findViewById<TextView>(R.id.rrHeartTitle)
+        likedImage.setOnClickListener {
+            if (likedTitle.text == resultRecipe.aggregateLikes.toString()) {
+                likedImage.setImageResource(R.drawable.ic_heart)
+                likedTitle.text =
+                    (resultRecipe.aggregateLikes + 1).toString()
+            } else {
+                likedImage.setImageResource(R.drawable.ic_heart_broken)
+                likedTitle.text =
+                    resultRecipe.aggregateLikes.toString()
+            }
+        }
     }
 
     override fun getItemCount(): Int {

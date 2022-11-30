@@ -9,7 +9,7 @@ import kotlinx.android.parcel.RawValue
 @Parcelize
 data class ResultRecipe(
     @SerializedName("aggregateLikes")
-    val aggregateLikes: Int?,
+    val aggregateLikes: Int,
     @SerializedName("cheap")
     val cheap: Boolean?,
     @SerializedName("dairyFree")

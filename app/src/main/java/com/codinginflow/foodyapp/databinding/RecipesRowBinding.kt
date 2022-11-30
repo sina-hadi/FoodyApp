@@ -3,6 +3,7 @@ package com.codinginflow.foodyapp.databinding
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -14,15 +15,16 @@ import com.codinginflow.foodyapp.model.ResultRecipe
 import com.codinginflow.foodyapp.ui.mainfragments.favorite.FavoriteRecipesFragmentDirections
 import com.codinginflow.foodyapp.ui.mainfragments.recipes.RecipesFragmentDirections
 import com.codinginflow.foodyapp.util.Constants.Companion.BASE_IMAGE_URL
+import com.squareup.picasso.Picasso
 import org.jsoup.Jsoup
 
 class RecipesRowBinding {
 
     companion object {
 
-        @BindingAdapter("onRecipeClickListener")
+        @BindingAdapter("android:onRecipeClickListener")
         @JvmStatic
-        fun onRecipeClickListener(recipeRowLayout: ConstraintLayout, result: ResultRecipe) {
+        fun onRecipeClickListener(recipeRowLayout: LinearLayout, result: ResultRecipe) {
             recipeRowLayout.setOnClickListener {
                 try {
                     val action =
@@ -37,10 +39,12 @@ class RecipesRowBinding {
         @BindingAdapter("android:loadImageFromUrl")
         @JvmStatic
         fun loadImageFromUrl(imageView: ImageView, imageUrl: String) {
-            imageView.load(imageUrl) {
-                crossfade(600)
-                error(R.drawable.ic_image_search)
-            }
+            Picasso
+                .get()
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_image_search)
+                .error(R.drawable.ic_image_search)
+                .into(imageView)
         }
 
         @BindingAdapter("android:ingredientsLoadImageFromUrl")

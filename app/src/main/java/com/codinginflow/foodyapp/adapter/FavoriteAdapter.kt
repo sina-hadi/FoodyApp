@@ -3,6 +3,9 @@ package com.codinginflow.foodyapp.adapter
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -55,7 +58,7 @@ class FavoriteAdapter(
         myViewHolders.add(holder)
         rootView = holder.itemView.rootView
 
-        val recipeRow = holder.itemView.findViewById<ConstraintLayout>(R.id.recipesRowLayout)
+        val recipeRow = holder.itemView.findViewById<LinearLayout>(R.id.recipesRowLayout)
         val resultRecipe: FavoritesEntity = recipes[position]
         holder.bind(resultRecipe.result)
 
@@ -68,6 +71,20 @@ class FavoriteAdapter(
                         resultRecipe.result
                     )
                 recipeRow.findNavController().navigate(action)
+            }
+        }
+
+        val likedImage = holder.itemView.findViewById<ImageView>(R.id.rrHeartImage)
+        val likedTitle = holder.itemView.findViewById<TextView>(R.id.rrHeartTitle)
+        likedImage.setOnClickListener {
+            if (likedTitle.text == resultRecipe.result.aggregateLikes.toString()) {
+                likedImage.setImageResource(R.drawable.ic_heart)
+                likedTitle.text =
+                    (resultRecipe.result.aggregateLikes + 1).toString()
+            } else {
+                likedImage.setImageResource(R.drawable.ic_heart_broken)
+                likedTitle.text =
+                    resultRecipe.result.aggregateLikes.toString()
             }
         }
 
@@ -93,13 +110,14 @@ class FavoriteAdapter(
             changeRecipeStyle(holder, R.drawable.recipes_shape)
         } else {
             selectedRecipes.add(currentRecipe)
+            Log.e("Adapter", "CHANGE")
             changeRecipeStyle(holder, R.drawable.selected_recipe_shape)
         }
         setTitleAndUnselect()
     }
 
     private fun changeRecipeStyle(holder: MyViewHolder, shape: Int) {
-        holder.itemView.findViewById<ConstraintLayout>(R.id.recipesRowLayout).background =
+        holder.itemView.findViewById<LinearLayout>(R.id.recipesRowLayout).background =
             ContextCompat.getDrawable(
                 requireActivity, shape
             )
