@@ -24,6 +24,10 @@ import com.codinginflow.foodyapp.util.observeOnce
 import com.codinginflow.foodyapp.viewmodel.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -59,9 +63,10 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
 
-
         setupRecyclerView()
-        readDatabase()
+        requestApiData()
+
+        mainViewModel.errorState.value = false
 
         lifecycleScope.launch {
             networkListener = NetworkListener()
@@ -76,7 +81,8 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
             if (recipesViewModel.networkStatus) {
                 findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
             } else {
-                Toast.makeText(requireContext(),"No Internet Connection",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No Internet Connection", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -90,12 +96,11 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun readDatabase() {
-        lifecycleScope.launch {
-            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
-                if (database.isNotEmpty() && !args.backFromBottomSheet) {
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.readRecipes.collectLatest { database ->
+                if (database.isNotEmpty()) {
                     mAdapter.setData(database[0].foodRecipe)
-                } else {
-                    requestApiData()
+                    mainViewModel.errorState.value = true
                 }
             }
         }
@@ -116,6 +121,9 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.menu_offline -> readDatabase()
+                }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)

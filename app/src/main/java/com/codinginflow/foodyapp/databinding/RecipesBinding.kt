@@ -10,53 +10,62 @@ import com.codinginflow.foodyapp.model.FoodJoke
 import com.codinginflow.foodyapp.model.FoodRecipe
 import com.codinginflow.foodyapp.util.NetworkResult
 import com.google.android.material.card.MaterialCardView
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class RecipesBinding {
 
     companion object {
 
-        @BindingAdapter("eReadApiResponse")
+        @BindingAdapter("app:eReadApiResponse", "app:eReadApiDatabase", requireAll = true)
         @JvmStatic
         fun errorImageViewVisibility(
-            linearLayout: LinearLayout, apiResponse: NetworkResult<FoodRecipe>?
+            linearLayout: LinearLayout, apiResponse: NetworkResult<FoodRecipe>?, database: Boolean
         ) {
-            when (apiResponse) {
-                is NetworkResult.Error -> {
-                    linearLayout.visibility = View.VISIBLE
+            if (database) {
+                linearLayout.visibility = View.INVISIBLE
+            } else {
+                when (apiResponse) {
+                    is NetworkResult.Error -> {
+                        linearLayout.visibility = View.VISIBLE
+                    }
+                    is NetworkResult.Loading -> {
+                        linearLayout.visibility = View.INVISIBLE
+                    }
+                    is NetworkResult.Success -> {
+                        linearLayout.visibility = View.INVISIBLE
+                    }
+                    else -> {}
                 }
-                is NetworkResult.Loading -> {
-                    linearLayout.visibility = View.INVISIBLE
-                }
-                is NetworkResult.Success -> {
-                    linearLayout.visibility = View.INVISIBLE
-                }
-                else -> {}
             }
         }
 
-        @BindingAdapter("lReadApiResponse")
+        @BindingAdapter("lReadApiResponse", "lReadApiDatabase", requireAll = true)
         @JvmStatic
         fun loadingImageViewVisibility(
-            linearLayout: LinearLayout, apiResponse: NetworkResult<FoodRecipe>?
+            linearLayout: LinearLayout, apiResponse: NetworkResult<FoodRecipe>?, database: Boolean
         ) {
-            when (apiResponse) {
-                is NetworkResult.Error -> {
-                    linearLayout.visibility = View.INVISIBLE
+            if (database) {
+                linearLayout.visibility = View.INVISIBLE
+            } else {
+                when (apiResponse) {
+                    is NetworkResult.Error -> {
+                        linearLayout.visibility = View.INVISIBLE
+                    }
+                    is NetworkResult.Loading -> {
+                        linearLayout.visibility = View.VISIBLE
+                    }
+                    is NetworkResult.Success -> {
+                        linearLayout.visibility = View.INVISIBLE
+                    }
+                    else -> {}
                 }
-                is NetworkResult.Loading -> {
-                    linearLayout.visibility = View.VISIBLE
-                }
-                is NetworkResult.Success -> {
-                    linearLayout.visibility = View.INVISIBLE
-                }
-                else -> {}
             }
         }
 
-        @BindingAdapter("readApiResponseJoke", "readDatabaseJoke", requireAll = false)
+        @BindingAdapter("readApiResponseJoke")
         @JvmStatic
         fun setCardAndProgressVisibility(
-            view: View, apiResponse: NetworkResult<FoodJoke>?, database: List<FoodJokeEntity>?
+            view: View, apiResponse: NetworkResult<FoodJoke>?
         ) {
             when (apiResponse) {
                 is NetworkResult.Loading -> {
@@ -76,9 +85,6 @@ class RecipesBinding {
                         }
                         is MaterialCardView -> {
                             view.visibility = View.VISIBLE
-                            if (database != null && database.isEmpty()) {
-                                view.visibility = View.INVISIBLE
-                            }
                         }
                     }
                 }

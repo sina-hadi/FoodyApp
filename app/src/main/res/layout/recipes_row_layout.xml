@@ -11,153 +11,164 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/recipesRowLayout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:onRecipeClickListener="@{result}"
-        android:layout_marginRight="8dp">
-
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/rrImageFood"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:loadImageFromUrl="@{result.image}"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/ShapeAppearanceOverlay.Avatar" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/recipesRowLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/recipes_shape">
+            android:layout_height="150dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:onRecipeClickListener="@{result}">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/rrImageFood"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:loadImageFromUrl="@{result.image}"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.Avatar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rrImageFood"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/rrTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.8"
-                    android:layout_marginTop="4dp"
-                    android:text="@{result.title}"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:maxLines="2"
-                    android:ellipsize="end"/>
-
-                <TextView
-                    android:id="@+id/rrDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_weight="1.2"
-                    android:parseHtml="@{result.summary}"
-                    android:textSize="12sp"
-                    android:maxLines="3"
-                    android:ellipsize="end"/>
+                android:background="@drawable/recipes_shape">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rrImageFood"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/rrTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="0.8"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{result.title}"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/rrDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1.2"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:parseHtml="@{result.summary}"
+                        android:textSize="12sp" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
 
-                        <ImageView
-                            android:id="@+id/rrHeartImage"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_heart_broken" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/rrHeartTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center_horizontal"
-                            android:setNumberOfLikes="@{result.aggregateLikes}"
-                            android:textColor="@color/red"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
+                            <ImageView
+                                android:id="@+id/rrHeartImage"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_heart_broken" />
+
+                            <TextView
+                                android:id="@+id/rrHeartTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center_horizontal"
+                                android:setNumberOfLikes="@{result.aggregateLikes}"
+                                android:textColor="@color/red"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/rrTimeImage"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_clock" />
+
+                            <TextView
+                                android:id="@+id/rrTimeTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal"
+                                android:setNumberOfMinutes="@{result.readyInMinutes}"
+                                android:textColor="@color/yellow"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/rrVeganImage"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:applyColor="@{result.vegan}"
+                                android:src="@drawable/ic_leaf" />
+
+                            <TextView
+                                android:id="@+id/rrVeganTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:applyColor="@{result.vegan}"
+                                android:gravity="center_horizontal"
+                                android:text="@string/vegan"
+                                android:textColor="#6C6C6C"
+                                android:textSize="10sp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/rrTimeImage"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_clock" />
-
-                        <TextView
-                            android:id="@+id/rrTimeTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal"
-                            android:setNumberOfMinutes="@{result.readyInMinutes}"
-                            android:textColor="@color/yellow"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/rrVeganImage"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:applyColor="@{result.vegan}"
-                            android:src="@drawable/ic_leaf" />
-
-                        <TextView
-                            android:id="@+id/rrVeganTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:applyColor="@{result.vegan}"
-                            android:gravity="center_horizontal"
-                            android:text="@string/vegan"
-                            android:textColor="#6C6C6C"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
-
-
             </LinearLayout>
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/white"/>
 
     </LinearLayout>
 </layout>

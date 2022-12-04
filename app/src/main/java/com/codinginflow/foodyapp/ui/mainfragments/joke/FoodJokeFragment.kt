@@ -16,6 +16,7 @@ import com.codinginflow.foodyapp.util.Constants.Companion.API_KEY
 import com.codinginflow.foodyapp.util.NetworkResult
 import com.codinginflow.foodyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -67,9 +68,9 @@ class FoodJokeFragment : Fragment() {
     }
 
     private fun loadDataFromCache() {
-        lifecycleScope.launch {
-            mainViewModel.readFoodJoke.observe(viewLifecycleOwner) { database ->
-                if (database.isNotEmpty() && database != null) {
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.readFoodJoke.collectLatest { database ->
+                if (!database.isNullOrEmpty()) {
                     foodJoke = database[0].foodJoke.text
                     binding.foodJokeText.text = foodJoke
                 }

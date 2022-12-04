@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -23,6 +24,7 @@ import com.codinginflow.foodyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
@@ -82,17 +84,19 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun checkSavedRecipe(menuItem: MenuItem): Boolean {
-        mainViewModel.readFavoriteRecipes.observe(this) {
-            try {
-                for (savedRecipe in it) {
-                    if (savedRecipe.result.id == args.result.id) {
-                        menuItem.icon?.setTint(ContextCompat.getColor(this, R.color.yellow))
-                        isFavoriteRecipe = true
-                        break
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.readFavoriteRecipes.collectLatest {
+                try {
+                    for (savedRecipe in it) {
+                        if (savedRecipe.result.id == args.result.id) {
+                            menuItem.icon?.setTint(ContextCompat.getColor(this@DetailsActivity, R.color.yellow))
+                            isFavoriteRecipe = true
+                            break
+                        }
                     }
+                } catch (e: Exception) {
+                    Log.e("ABCD", e.message.toString())
                 }
-            } catch (e: Exception) {
-                Log.e("ABCD", e.message.toString())
             }
         }
         return isFavoriteRecipe

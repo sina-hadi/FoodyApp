@@ -17,6 +17,7 @@ import com.codinginflow.foodyapp.util.observeOnce
 import com.codinginflow.foodyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -53,12 +54,14 @@ class FavoriteRecipesFragment : Fragment() {
     }
 
     private fun readDatabase() {
-        mainViewModel.readFavoriteRecipes.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                binding.emptyLinearLayout.visibility = View.VISIBLE
-            } else {
-                binding.emptyLinearLayout.visibility = View.INVISIBLE
-                mAdapter.setData(it)
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.readFavoriteRecipes.collectLatest {
+                if (it.isEmpty()) {
+                    binding.emptyLinearLayout.visibility = View.VISIBLE
+                } else {
+                    binding.emptyLinearLayout.visibility = View.INVISIBLE
+                    mAdapter.setData(it)
+                }
             }
         }
     }

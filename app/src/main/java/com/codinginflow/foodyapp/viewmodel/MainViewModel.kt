@@ -11,6 +11,7 @@ import com.codinginflow.foodyapp.util.HandleResponse
 import com.codinginflow.foodyapp.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,9 +21,9 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     // ROOM
-    val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
-    val readFavoriteRecipes : LiveData<List<FavoritesEntity>> = repository.local.readFavoriteRecipes().asLiveData()
-    val readFoodJoke: LiveData<List<FoodJokeEntity>> = repository.local.readFoodJoke().asLiveData()
+    val readRecipes: Flow<List<RecipesEntity>> = repository.local.readRecipes()
+    val readFavoriteRecipes : Flow<List<FavoritesEntity>> = repository.local.readFavoriteRecipes()
+    val readFoodJoke: Flow<List<FoodJokeEntity>> = repository.local.readFoodJoke()
 
     private fun insertRecipes(recipesEntity: RecipesEntity) =
         viewModelScope.launch (Dispatchers.IO) {
@@ -48,6 +49,7 @@ class MainViewModel @Inject constructor(
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
     var searchedRecipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
     val foodJokeResponse: MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
+    var errorState = MutableLiveData(false)
 
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
         getRecipesSafeCall(queries)

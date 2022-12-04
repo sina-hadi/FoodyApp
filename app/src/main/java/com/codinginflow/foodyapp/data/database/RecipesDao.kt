@@ -1,14 +1,12 @@
 package com.codinginflow.foodyapp.data.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.codinginflow.foodyapp.data.database.entities.FavoritesEntity
 import com.codinginflow.foodyapp.data.database.entities.FoodJokeEntity
 import com.codinginflow.foodyapp.data.database.entities.RecipesEntity
-import com.codinginflow.foodyapp.model.FoodJoke
 import kotlinx.coroutines.flow.Flow
 
 @Dao

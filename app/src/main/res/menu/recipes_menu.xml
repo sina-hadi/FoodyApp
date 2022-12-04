@@ -9,4 +9,10 @@
         app:showAsAction="ifRoom"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
+    <item android:id="@+id/menu_offline"
+        android:title="Offline"
+        android:icon="@drawable/ic_offline"
+        android:iconTint="@color/white"
+        app:showAsAction="ifRoom"/>
+
 </menu>
