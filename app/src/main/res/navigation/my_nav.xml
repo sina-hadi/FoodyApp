@@ -35,6 +35,7 @@
         android:name="com.codinginflow.foodyapp.ui.mainfragments.joke.FoodJokeFragment"
         android:label="Food Joke"
         tools:layout="@layout/fragment_food_joke" />
+
     <dialog
         android:id="@+id/recipesBottomSheet"
         android:name="com.codinginflow.foodyapp.ui.mainfragments.recipes.bottomsheet.RecipesBottomSheet"

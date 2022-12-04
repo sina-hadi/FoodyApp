@@ -1,6 +1,5 @@
 package com.codinginflow.foodyapp.util
 
-import android.util.Log
 import retrofit2.Response
 import javax.inject.Inject
 

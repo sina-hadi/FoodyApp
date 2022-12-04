@@ -9,6 +9,8 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.codinginflow.foodyapp.R
 import com.codinginflow.foodyapp.adapter.PagerAdapter
 import com.codinginflow.foodyapp.data.database.entities.FavoritesEntity
@@ -67,6 +69,8 @@ class DetailsActivity : AppCompatActivity() {
             tab.text = titles[position]
         }.attach()
 
+        binding.viewPager.reduceDragSensitivity()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -122,5 +126,16 @@ class DetailsActivity : AppCompatActivity() {
         mainViewModel.insertFavoriteRecipe(favoritesEntity)
         Snackbar.make(binding.detailsLayout, "Recipe saved.", Snackbar.LENGTH_SHORT)
             .setAction("Okay") {}.show()
+    }
+
+    private fun ViewPager2.reduceDragSensitivity() {
+        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
+        recyclerViewField.isAccessible = true
+        val recyclerView = recyclerViewField.get(this) as RecyclerView
+
+        val touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
+        touchSlopField.isAccessible = true
+        val touchSlop = touchSlopField.get(recyclerView) as Int
+        touchSlopField.set(recyclerView, touchSlop * 4)       // "8" was obtained experimentally
     }
 }

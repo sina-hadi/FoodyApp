@@ -1,7 +1,5 @@
 package com.codinginflow.foodyapp.viewmodel
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.codinginflow.foodyapp.data.database.entities.FavoritesEntity
 import com.codinginflow.foodyapp.data.database.entities.FoodJokeEntity
@@ -14,14 +12,12 @@ import com.codinginflow.foodyapp.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: Repository,
-    application: Application
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     // ROOM
     val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()

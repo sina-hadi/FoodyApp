@@ -3,6 +3,7 @@ package com.codinginflow.foodyapp.ui.mainfragments.recipes
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
@@ -75,7 +76,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
             if (recipesViewModel.networkStatus) {
                 findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
             } else {
-                recipesViewModel.showNetworkStatus()
+                Toast.makeText(requireContext(),"No Internet Connection",Toast.LENGTH_SHORT).show()
             }
         }
 

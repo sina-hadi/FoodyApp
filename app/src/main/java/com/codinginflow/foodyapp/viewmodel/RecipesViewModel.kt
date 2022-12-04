@@ -1,8 +1,6 @@
 package com.codinginflow.foodyapp.viewmodel
 
-import android.app.Application
-import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codinginflow.foodyapp.data.DataStoreRepository
 import com.codinginflow.foodyapp.util.Constants.Companion.API_KEY
@@ -23,9 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
-    application: Application,
     private val dataStoreRepository: DataStoreRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
@@ -69,13 +66,6 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
         return queries
-
-    }
-
-    fun showNetworkStatus() {
-        if (!networkStatus) {
-            Toast.makeText(getApplication(), "No Internet Connection.", Toast.LENGTH_SHORT).show()
-        }
     }
 
 }
